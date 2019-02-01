@@ -1,0 +1,717 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+
+<cms>
+    <config deviceID="5" masterID="5" mmsID="7" canID="8"></config>
+    <devices>
+        <device id="1" name="cms1" label="Fwd guest CMS display" ipaddr="192.168.79.18">
+            <lights>
+                <group id="1" name="Forward Guest Cabin" theatre="yes" shower="no">
+                    <light id="1" name="Overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="00" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="2" name="High Level Rope" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="00" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="3" name="Low Level Rope (white)" groupID="1">
+                        <defaultlevels day="100" eve="100" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="00" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="4" name="Low Level Rope (red)" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="00" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <group id="2" name="Forward Guest Heads" theatre="no" shower="yes">
+                    <light id="5" name="Overhead" groupID="2">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="100"></defaultlevels>
+                        <pgn cantype="byte" instance="01" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="5" name="Overhead" groupID="2">
+                        <defaultlevels day="100" eve="100" night="0" theatre="0" shower="100"></defaultlevels>
+                        <pgn cantype="byte" instance="01" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="6" name="Red Overhead" groupID="2">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="01" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                </group>
+            </lights>
+            <blinds>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Cabin">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Fwd Guest">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="01" byteposition="6" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="0"></pgn>
+                            </switch>
+                            <switch id ="2" name="Heads">
+                                <defaultlevels value="1"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Heads Extractor Fan">
+                    <fan id ="1" name="Background Ventilation" groupID="1">
+                        <defaultlevels value="40"></defaultlevels>
+                        <pgn cantype="byte" instance="02" byteposition="3" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="2" name="Day Boost Speed" groupID="1">
+                        <defaultlevels value="100"></defaultlevels>
+                        <pgn cantype="byte" instance="02" byteposition="4" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="3" name="Night Boost Speed" groupID="1">
+                        <defaultlevels value="60"></defaultlevels>
+                        <pgn cantype="byte" instance="02" byteposition="5" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+        <device id="2" name="cms2" label="Port Guest CMS display" ipaddr="192.168.79.17">
+            <lights>
+                <group id="1" name="Cabin" theatre="yes" shower="no">
+                    <light id="34" name="Overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="12" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="35" name="Directional spot" groupID="1">
+                        <defaultlevels day="50" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="12" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="36" name="Rope high level" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="12" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="37" name="Rope low level (white)" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="75" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="12" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="38" name="Rope low level (red)" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="13" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <group id="2" name="Heads" theatre="no" shower="yes">
+                    <light id="39" name="Overhead" groupID="2">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="13" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="40" name="Directional spot" groupID="2">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="13" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="41" name="Shower spot" groupID="2">
+                        <defaultlevels day="0" eve="0" night="0" theatre="0" shower="100"></defaultlevels>
+                        <pgn cantype="byte" instance="13" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="42" name="Rope" groupID="2">
+                        <defaultlevels day="100" eve="100" night="50" theatre="0" shower="50"></defaultlevels>
+                        <pgn cantype="byte" instance="14" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                </group>
+            </lights>
+            <blinds>
+                <group id="1" name="Saloon">
+                    <blind id="1" name="Port" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="01" byteposition="0" bitposition="4"></pgn>
+                        <pgn cantype="bit" direction="close" instance="01" byteposition="0" bitposition="5"></pgn>
+                    </blind>
+                </group>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Cabin">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Port Guest">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="14" byteposition="4" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="01" byteposition="0" bitposition="6"></pgn>
+                            </switch>
+                            <switch id="2" name="Heads">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="01" byteposition="0" bitposition="7"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Heads Extractor Fan">
+                    <fan id ="2" name="Background Ventilation" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="14" byteposition="5" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="3" name="Day boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="14" byteposition="6" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="4" name="Night boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="15" byteposition="3" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+        <device id="3" name="cms3" label="Stbd Guest CMS display" ipaddr="192.168.79.16">
+            <lights>
+                <group id="1" name="Cabin" theatre="yes" shower="no">
+                    <light id="43" name="Overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="15" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="44" name="Directional spot" groupID="1">
+                        <defaultlevels day="50" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="15" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="45" name="Rope high level" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="15" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="46" name="Rope low level (white)" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="75" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="16" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="47" name="Rope low level (red)" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="16" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <group id="2" name="Heads" theatre="no" shower="yes">
+                    <light id="48" name="Overhead" groupID="2">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="16" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="49" name="Directional spot" groupID="2">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="16" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="50" name="Shower spot" groupID="2">
+                        <defaultlevels day="0" eve="0" night="0" theatre="0" shower="100"></defaultlevels>
+                        <pgn cantype="byte" instance="17" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="51" name="Rope" groupID="2">
+                        <defaultlevels day="100" eve="100" night="50" theatre="0" shower="50"></defaultlevels>
+                        <pgn cantype="byte" instance="17" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                </group>
+            </lights>
+            <blinds>
+                <group id="1" name="Saloon">
+                    <blind id="1" name="Port" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="02" byteposition="0" bitposition="0"></pgn>
+                        <pgn cantype="bit" direction="close" instance="02" byteposition="0" bitposition="1"></pgn>
+                    </blind>
+                </group>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Cabin">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Stbd Guest">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="17" byteposition="5" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="02" byteposition="0" bitposition="2"></pgn>
+                            </switch>
+                            <switch id="2" name="Heads">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="02" byteposition="0" bitposition="3"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Heads Extractor Fan">
+                    <fan id ="2" name="Background Ventilation" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="17" byteposition="6" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="3" name="Day boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="18" byteposition="3" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="4" name="Night boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="18" byteposition="4" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+        <device id="4" name="cms4" label="Owner's Cabin CMS display" ipaddr="192.168.79.15">
+            <lights>
+                <group id="1" name="Cabin" theatre="yes" shower="no">
+                    <light id="52" name="Overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="18" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="53" name="Aft bulkhead directional spot" groupID="1">
+                        <defaultlevels day="50" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="18" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="54" name="Head bulkhead directional spot" groupID="1">
+                        <defaultlevels day="75" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="19" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="55" name="Rope high level" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="19" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="56" name="Red step lights" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="19" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="57" name="Rope low level (white)" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="19" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="58" name="Rope low level (red)" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="20" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <group id="2" name="Heads" theatre="no" shower="yes">
+                    <light id="59" name="Overhead" groupID="2">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="20" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="60" name="Directional spot" groupID="2">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="20" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="61" name="Shower spot" groupID="2">
+                        <defaultlevels day="0" eve="0" night="0" theatre="0" shower="100"></defaultlevels>
+                        <pgn cantype="byte" instance="20" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="62" name="Rope" groupID="2">
+                        <defaultlevels day="100" eve="100" night="50" theatre="0" shower="50"></defaultlevels>
+                        <pgn cantype="byte" instance="21" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                </group>
+            </lights>
+            <blinds>
+                <group id="1" name="Saloon">
+                    <blind id="1" name="Both" groupID="1">
+                        <pgn cantype="group" direction ="0" instance="0" byteposition="0" bitposition="0"></pgn>
+                    </blind>
+                    <blind id="2" name="Port" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="02" byteposition="0" bitposition="4"></pgn>
+                        <pgn cantype="bit" direction="close" instance="02" byteposition="0" bitposition="5"></pgn>
+                    </blind>
+                    <blind id="3" name="Starboard" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="02" byteposition="0" bitposition="6"></pgn>
+                        <pgn cantype="bit" direction="close" instance="02" byteposition="0" bitposition="7"></pgn>
+                    </blind>
+                </group>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Cabin">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Owner's">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="21" byteposition="4" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Cabin">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="03" byteposition="0" bitposition="0"></pgn>
+                            </switch>
+                            <switch id="2" name="Heads">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="03" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Heads Extractor Fan">
+                    <fan id ="2" name="Background Ventilation" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="21" byteposition="5" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="3" name="Day boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="21" byteposition="6" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="4" name="Night boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="22" byteposition="3" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+        <device id="5" name="cms5" label="Saloon CMS display" subnet="192.168.79.14">
+            <lights>
+                <group id="1" name="Saloon" theatre="yes" shower="no">
+                    <light id="7" name="Table Overhead" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="02" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="8" name="Settee Overhead" groupID="1">
+                        <defaultlevels day="100" eve="25" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="03" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="9" name="Port Side Overhead" groupID="1">
+                        <defaultlevels day="100" eve="0" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="03" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="10" name="Port Overhead Rope" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="03" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="11" name="Starboard Overhead Rope" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="03" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="12" name="Red Settee Rope Low" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="04" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="13" name="Table Rope RED" groupID="1">
+                        <defaultlevels day="0" eve="95" night="100" theatre="75" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="04" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="14" name="Table Rope GREEN" groupID="1">
+                        <defaultlevels day="0" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="04" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="15" name="Table Rope BLUE" groupID="1">
+                        <defaultlevels day="0" eve="0" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="04" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="16" name="Table Rope WHITE" groupID="1">
+                        <defaultlevels day="100" eve="0" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="05" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="17" name="Servery Low Red" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="05" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="18" name="Companionway White Rope" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="05" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="19" name="Companionway Red Rope" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="05" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="20" name="Passageway Aft Steps White Rope" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="06" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="21" name="Passageway Aft Steps Red Rope" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="06" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="22" name="Fwd Steps White Rope" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="06" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="23" name="Fwd Steps Red Rope" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="06" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <group id="2" name="Passageway" theatre="yes" shower="no">
+                    <light id="24" name="Passageway Overheads" groupID="2">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="07" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="25" name="Port Passageway Directional Spot" groupID="2">
+                        <defaultlevels day="75" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="07" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="26" name="Starboard Passageway Directional Spot" groupID="2">
+                        <defaultlevels day="75" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="07" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="27" name="Low Level Red LED" groupID="2">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="07" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                </group>
+                <master id="1" name="Whole Boat On/Off">
+                    <pgn cantype="bit" instance="00" byteposition="0" bitposition="2"></pgn>
+                </master>
+            </lights>
+            <blinds>
+                <group id="1" name="Saloon">
+                    <blind id="1" name="Both" groupID="1">
+                        <pgn cantype="group" direction="0" instance="0" byteposition="0" bitposition="0"></pgn>
+                    </blind>
+                    <blind id="2" name="Port" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="00" byteposition="0" bitposition="3"></pgn>
+                        <pgn cantype="bit" direction="close" instance="00" byteposition="0" bitposition="4"></pgn>
+                    </blind>
+                    <blind id="3" name="Starboard" groupID="1">
+                        <pgn cantype="bit" direction="open" instance="00" byteposition="0" bitposition="5"></pgn>
+                        <pgn cantype="bit" direction="close" instance="00" byteposition="0" bitposition="6"></pgn>
+                    </blind>
+                </group>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Saloon">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Saloon">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Saloon">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="08" byteposition="3" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Power">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="7"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Saloon Extractor Fan">
+                    <fan id ="1" name="Background Ventilation" groupID="1">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="08" byteposition="4" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+                    <group id="1" name="Resets">
+                        <reset id ="1" name="Reset saloon">
+                            <pgn cantype="bit" instance="01" byteposition="0" bitposition="0"></pgn>
+                        </reset>
+                        <reset id ="2" name="Reset all units">
+                            <pgn cantype="bit" instance="01" byteposition="0" bitposition="1"></pgn>
+                        </reset>
+                    </group>
+                    <group id="2" name="Maintenance">
+                        <reset id ="3" name="Fuse reset">
+                            <pgn cantype="bit" instance="01" byteposition="0" bitposition="3"></pgn>
+                        </reset>
+                    </group>
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+        <device id="6" name="cms6" label="Galley CMS display" subnet="192.168.79.13">
+            <lights>
+                <group id="1" name="Galley" theatre="yes" shower="no">
+                    <light id="28" name="Overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="08" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="29" name="Under counter white rope" groupID="1">
+                        <defaultlevels day="100" eve="75" night="0" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="08" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                    <light id="30" name="Port under counter red rope" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="09" byteposition="3" bitposition="0"></pgn>
+                    </light>
+                    <light id="31" name="Stbd under couter red rope mess" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="0" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="09" byteposition="4" bitposition="0"></pgn>
+                    </light>
+                    <light id="32" name="Kick recess red rope" groupID="1">
+                        <defaultlevels day="0" eve="0" night="100" theatre="50" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="09" byteposition="5" bitposition="0"></pgn>
+                    </light>
+                    <light id="33" name="Crew mess overhead" groupID="1">
+                        <defaultlevels day="100" eve="50" night="0" theatre="25" shower="0"></defaultlevels>
+                        <pgn cantype="byte" instance="09" byteposition="6" bitposition="0"></pgn>
+                    </light>
+                </group>
+            </lights>
+            <blinds>
+            </blinds>
+            <climate>
+                <aircon>
+                    <group id="1" name="Galley">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="0" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id ="1" name="Galley">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="00" byteposition="0" bitposition="1"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </aircon>
+                <heating>
+                    <group id="1" name="Galley">
+                        <defaultlevels value="18"></defaultlevels>
+                        <pgn cantype="byte" instance="10" byteposition="0" bitposition="0"></pgn>
+                        <switches>
+                            <switch id="1" name="Power">
+                                <defaultlevels value="0"></defaultlevels>
+                                <pgn cantype="bit" instance="01" byteposition="0" bitposition="3"></pgn>
+                            </switch>
+                        </switches>
+                    </group>
+                </heating>
+            </climate>
+            <ventilation>
+                <group id="1" name="Galley Extractor Fan">
+                    <fan id ="1" name="Background Ventilation" groupID="1">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="10" byteposition="4" bitposition="0"></pgn>
+                    </fan>
+                </group>
+                <group id="2" name="Crew Extractor Fan">
+                    <fan id ="2" name="Background Ventilation" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="10" byteposition="5" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="3" name="Day boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="10" byteposition="6" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="4" name="Night boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="11" byteposition="3" bitposition="0"></pgn>
+                    </fan>
+                </group>
+                <group id="3" name="Crew Extractor Fan">
+                    <fan id ="5" name="Background Ventilation" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="11" byteposition="4" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="6" name="Day boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="11" byteposition="5" bitposition="0"></pgn>
+                    </fan>
+                    <fan id ="7" name="Night boost speed" groupID="2">
+                        <defaultlevels value="0"></defaultlevels>
+                        <pgn cantype="byte" instance="11" byteposition="6" bitposition="0"></pgn>
+                    </fan>
+                </group>
+            </ventilation>
+            <settings>
+                <screenbrightness day="100" eve="60" night="30" theatre="0"></screenbrightness>
+                <screentimeout default="5"></screentimeout>
+                <time dawnstart="150" dawnend="270" duskstart="780" duskend="930"></time>
+                <resets>
+                </resets>
+            </settings>
+            <help>
+
+            </help>
+        </device>
+
+    </devices>
+</cms>

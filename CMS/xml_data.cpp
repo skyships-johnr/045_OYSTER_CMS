@@ -1156,7 +1156,6 @@ int XmlData::SaveAllParameters()
 	}
 
 	//	Allocate a new buffer, being sure that any eventual changes in size will fit
-	pthread_mutex_lock(&xmlfile_mutex_);
 	char *temp_buffer = new char[fsize_];
 	rapidxml::print(temp_buffer, xml_doc, 0);
 	size_t ss = strlen(temp_buffer);
@@ -1166,7 +1165,6 @@ int XmlData::SaveAllParameters()
 
 	fclose(xml_file);
 	delete temp_buffer;
-	pthread_mutex_unlock(&xmlfile_mutex_);
 
 	return 1;
 }

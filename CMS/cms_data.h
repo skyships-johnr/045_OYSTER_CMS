@@ -138,11 +138,6 @@ public:
 		given ID above. */
 		Settings settings_;
 
-		pthread_mutex_t lighting_data_mutex_;
-		pthread_mutex_t climate_data_mutex_;
-		pthread_mutex_t fans_data_mutex_;
-		pthread_mutex_t settings_data_mutex_;
-
 	}CmsConfig;
 
 	typedef struct CanMessage

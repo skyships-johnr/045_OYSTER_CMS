@@ -131,20 +131,11 @@ int CmsData::InitValues()
 
 	LoadMmsCommands();
 
-	cms_self_.lighting_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-	cms_self_.climate_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-	cms_self_.fans_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-	cms_self_.settings_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-
 	if(cms_self_.is_master)
 	{
 		for(unsigned int cms_it = 0; cms_it < cms_slaves_.size(); cms_it ++)
 		{
 			cms_slaves_.at(cms_it).control_mutex = PTHREAD_MUTEX_INITIALIZER;
-			cms_slaves_.at(cms_it).lighting_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-			cms_slaves_.at(cms_it).climate_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-			cms_slaves_.at(cms_it).fans_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
-			cms_slaves_.at(cms_it).settings_data_mutex_ = PTHREAD_MUTEX_INITIALIZER;
 		}
 		cms_self_.lighting_.master_switch_.value = true;
 
@@ -490,10 +481,7 @@ int CmsData::IncreaseLight(const unsigned char cms_id, const unsigned char group
 				msg[4] = (unsigned char)cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).id;				//	Component id
 				msg[5] = (unsigned char)cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).message_instance;	//	CAN message instance
 				msg[6] = (unsigned char)cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).frame_position;	//	CAN frame position
-
-				pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 				msg[7] = (unsigned char)cms_self_.lighting_.IncreaseLight(group_index, light_index);		//	Value
-				pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 
 				if (SendCanMessage(msg) == -1)
 					return -1;
@@ -513,9 +501,7 @@ int CmsData::IncreaseLight(const unsigned char cms_id, const unsigned char group
 			}
 			else
 			{
-				pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 				cms_self_.lighting_.IncreaseLight(group_index, light_index);
-				pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 			}
 		}
 	}
@@ -545,15 +531,12 @@ int CmsData::IncreaseLight(const unsigned char cms_id, const unsigned char group
 				msg[4] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).id;				//	Component id
 				msg[5] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).message_instance;	//	CAN message instance
 				msg[6] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).frame_position;	//	CAN frame position
-
-				pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 				msg[7] = (unsigned char)cms_slaves_.at(cms_index).lighting_.IncreaseLight(group_index, light_index);		//	Value
-				pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 
 				if (SendCanMessage(msg) == -1)
 					return -1;
 
-				//	Then we tell the slave we've messed with it's light
+				//	Then we tell the slave we've messed with its light
 				msg[0] = (unsigned char)self_id_;						//	From
 				msg[1] = (unsigned char)cms_id;					//	To
 				msg[2] = LIGHTING;						//	What
@@ -569,9 +552,7 @@ int CmsData::IncreaseLight(const unsigned char cms_id, const unsigned char group
 			else
 			{
 				//	Function call to lighting class to increase the value (range checks are done in there)
-				pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 				cms_slaves_.at(cms_index).lighting_.IncreaseLight(group_index, light_index);
-				pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			}
 		}
 	}
@@ -607,10 +588,7 @@ int CmsData::DecreaseLight(const unsigned char cms_id, const unsigned char group
 				msg[4] = cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).id;				//	Component id
 				msg[5] = cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).message_instance;	//	CAN message instance
 				msg[6] = cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).frame_position;	//	CAN frame position
-
-				pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 				msg[7] = (unsigned char)cms_self_.lighting_.DecreaseLight(group_index, light_index);		//	Value
-				pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 
 				if (SendCanMessage(msg) == -1)
 					return -1;
@@ -630,9 +608,7 @@ int CmsData::DecreaseLight(const unsigned char cms_id, const unsigned char group
 			}
 			else
 			{
-				pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 				cms_self_.lighting_.DecreaseLight(group_index, light_index);
-				pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 			}
 		}
 	}
@@ -661,10 +637,7 @@ int CmsData::DecreaseLight(const unsigned char cms_id, const unsigned char group
 				msg[4] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).id;				//	Component id
 				msg[5] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).message_instance;	//	CAN message instance
 				msg[6] = (unsigned char)cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.at(light_index).frame_position;	//	CAN frame position
-
-				pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 				msg[7] = (unsigned char)cms_slaves_.at(cms_index).lighting_.DecreaseLight(group_index, light_index);		//	Value
-				pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 
 				if (SendCanMessage(msg) == -1)
 					return -1;
@@ -684,9 +657,7 @@ int CmsData::DecreaseLight(const unsigned char cms_id, const unsigned char group
 			}
 			else
 			{
-				pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 				cms_slaves_.at(cms_index).lighting_.DecreaseLight(group_index, light_index);
-				pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			}
 		}
 	}
@@ -709,25 +680,8 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 		//	If it's changing to manual, maintain the last active screen brightness
 		if(group_index == 0)
 		{
-			pthread_mutex_lock(&cms_self_.settings_data_mutex_);
-				cms_self_.settings_.screensettings_.screen_brightness_manual = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-				cms_self_.settings_.screensettings_.screen_brightness_off = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-			pthread_mutex_unlock(&cms_self_.settings_data_mutex_);
-			/*if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL
-				&& new_value == Lighting::MANUAL)
-			{
-				pthread_mutex_lock(&cms_self_.settings_data_mutex_);
-				cms_self_.settings_.screensettings_.screen_brightness_manual = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-				pthread_mutex_unlock(&cms_self_.settings_data_mutex_);
-			}
-			//	If it's changing to off, maintain the last active screen brightness
-			else if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::OFF
-				&& new_value == Lighting::OFF)
-			{
-				pthread_mutex_lock(&cms_self_.settings_data_mutex_);
-				cms_self_.settings_.screensettings_.screen_brightness_off = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-				pthread_mutex_unlock(&cms_self_.settings_data_mutex_);
-			}*/
+			cms_self_.settings_.screensettings_.screen_brightness_manual = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
+			cms_self_.settings_.screensettings_.screen_brightness_off = cms_self_.settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
 		}
 
 		if(send_messages)
@@ -753,7 +707,6 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = (unsigned char)LIGHTING;				//	What: Light
 
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 			cms_self_.lighting_.SetProfile(group_index, new_value);
 			//	First we send all the CAN messages
 			for (unsigned int light_it = 0; light_it < cms_self_.lighting_.lightgroups_.at(group_index).lights.size(); light_it++)
@@ -772,8 +725,6 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 			//	Then we send the day/night bit
 			SendNightBit(cms_self_.lighting_.nightbit_message_instance_, cms_self_.lighting_.nightbit_frame_position_,
 			(cms_self_.lighting_.GetProfile(0) == Lighting::NIGHT));
-
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 
 			if(!cms_self_.is_master)
 			{
@@ -794,9 +745,7 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 			 cms_self_.lighting_.SetProfile(group_index, new_value);
-			 pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 
 		//	In case it has a related fan group, activate/deactivate boost ventilation
@@ -838,17 +787,13 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 			if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL
 				&& new_value == Lighting::MANUAL)
 			{
-				pthread_mutex_lock(&cms_slaves_.at(cms_index).settings_data_mutex_);
 				cms_slaves_.at(cms_index).settings_.screensettings_.screen_brightness_manual = cms_slaves_.at(cms_index).settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-				pthread_mutex_unlock(&cms_slaves_.at(cms_index).settings_data_mutex_);
 			}
 			//	If it's changing to off, maintain the last active screen brightness
 			else if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::OFF
 				&& new_value == Lighting::OFF)
 			{
-				pthread_mutex_lock(&cms_self_.settings_data_mutex_);
 				cms_slaves_.at(cms_index).settings_.screensettings_.screen_brightness_off = cms_slaves_.at(cms_index).settings_.GetScreenBrightness(cms_self_.lighting_.lightgroups_.at(group_index).profile);
-				pthread_mutex_unlock(&cms_self_.settings_data_mutex_);
 			}
 		}
 
@@ -876,7 +821,6 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
 
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, new_value);
 			//	First we send all the CAN messages
 			for (unsigned int light_it = 0; light_it < cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lights.size(); light_it++)
@@ -896,8 +840,6 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 			SendNightBit(cms_slaves_.at(cms_index).lighting_.nightbit_message_instance_, cms_slaves_.at(cms_index).lighting_.nightbit_frame_position_,
 			(cms_slaves_.at(cms_index).lighting_.GetProfile(0) == Lighting::NIGHT));
 
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
-
 
 			//	Then we tell the slave we changed our profile
 			//	Mount the message
@@ -916,9 +858,7 @@ int CmsData::SetProfile(const unsigned char cms_id, const unsigned char group_in
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, new_value);
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		}
 	}
 
@@ -945,7 +885,6 @@ int CmsData::IncreaseGroupLight(const unsigned char cms_id, const unsigned char 
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
 
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 			if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 			{
 				cms_self_.settings_.screensettings_.screen_brightness_manual =
@@ -976,15 +915,12 @@ int CmsData::IncreaseGroupLight(const unsigned char cms_id, const unsigned char 
 					return -1;
 
 			}
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 			if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_self_.lighting_.SetProfile(group_index, Lighting::MANUAL);
 			cms_self_.lighting_.IncreaseGroupLight(group_index);
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 
 	}
@@ -1007,7 +943,6 @@ int CmsData::IncreaseGroupLight(const unsigned char cms_id, const unsigned char 
 			msg[0] = (unsigned char)self_id_;				//	From
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			//	If it was not already, change profile to manual
 			if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, Lighting::MANUAL);
@@ -1034,7 +969,6 @@ int CmsData::IncreaseGroupLight(const unsigned char cms_id, const unsigned char 
 					return -1;
 
 			}
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 
 			//	Then we tell the slave to update values
 			//	Mount the message
@@ -1052,11 +986,9 @@ int CmsData::IncreaseGroupLight(const unsigned char cms_id, const unsigned char 
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, Lighting::MANUAL);
 			cms_slaves_.at(cms_index).lighting_.IncreaseGroupLight(group_index);
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		}
 	}
 
@@ -1081,8 +1013,6 @@ int CmsData::DecreaseGroupLight(const unsigned char cms_id, const unsigned char 
 			msg[0] = (unsigned char)self_id_;				//	From
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
-
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 
 			if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 			{
@@ -1112,17 +1042,13 @@ int CmsData::DecreaseGroupLight(const unsigned char cms_id, const unsigned char 
 					return -1;
 
 			}
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
-
 			if(cms_self_.lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_self_.lighting_.SetProfile(group_index, Lighting::MANUAL);
 
 			cms_self_.lighting_.DecreaseGroupLight(group_index);
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 
 	}
@@ -1145,7 +1071,6 @@ int CmsData::DecreaseGroupLight(const unsigned char cms_id, const unsigned char 
 			msg[0] = (unsigned char)self_id_;				//	From
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 
 			if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, Lighting::MANUAL);
@@ -1172,7 +1097,6 @@ int CmsData::DecreaseGroupLight(const unsigned char cms_id, const unsigned char 
 					return -1;
 
 			}
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 
 			//	Then we tell the slave to update values
 			//	Mount the message
@@ -1190,11 +1114,9 @@ int CmsData::DecreaseGroupLight(const unsigned char cms_id, const unsigned char 
 		}
 		else
 		{
-			pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 			if(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).profile != Lighting::MANUAL)
 				cms_slaves_.at(cms_index).lighting_.SetProfile(group_index, Lighting::MANUAL);
 			cms_slaves_.at(cms_index).lighting_.DecreaseGroupLight(group_index);
-			pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		}
 	}
 
@@ -1215,7 +1137,6 @@ int CmsData::StartIncreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 	if (cms_id == self_id_)
 	{
-		pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 		timer_delete(cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timerid);
 		SIGEV_PULSE_INIT(&cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_event,
 		control_coid_, SIGEV_PULSE_PRIO_INHERIT, LIGHTING, pulse_info);
@@ -1233,7 +1154,6 @@ int CmsData::StartIncreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 		timer_settime(cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timerid,
 		0, &cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timer, NULL);
-		pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 	}
 	else
 	{
@@ -1245,7 +1165,6 @@ int CmsData::StartIncreaseGroupTimer(const unsigned char cms_id, const unsigned 
 				return -1;
 		}
 
-		pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		timer_delete(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timerid);
 		SIGEV_PULSE_INIT(&cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_event,
 		control_coid_, SIGEV_PULSE_PRIO_INHERIT, LIGHTING, pulse_info);
@@ -1263,7 +1182,6 @@ int CmsData::StartIncreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 		timer_settime(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timerid,
 		0, &cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timer, NULL);
-		pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 	}
 
 	return 0;
@@ -1276,7 +1194,6 @@ int CmsData::StartDecreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 	if (cms_id == self_id_)
 	{
-		pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 		timer_delete(cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timerid);
 		SIGEV_PULSE_INIT(&cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_event,
 		control_coid_, SIGEV_PULSE_PRIO_INHERIT, LIGHTING, pulse_info);
@@ -1294,7 +1211,6 @@ int CmsData::StartDecreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 		timer_settime(cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timerid,
 		0, &cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timer, NULL);
-		pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 	}
 	else
 	{
@@ -1306,7 +1222,6 @@ int CmsData::StartDecreaseGroupTimer(const unsigned char cms_id, const unsigned 
 				return -1;
 		}
 
-		pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		timer_delete(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timerid);
 		SIGEV_PULSE_INIT(&cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_event,
 		control_coid_, SIGEV_PULSE_PRIO_INHERIT, LIGHTING, pulse_info);
@@ -1324,7 +1239,6 @@ int CmsData::StartDecreaseGroupTimer(const unsigned char cms_id, const unsigned 
 
 		timer_settime(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timerid,
 		0, &cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timer, NULL);
-		pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 	}
 
 	return 0;
@@ -1334,9 +1248,7 @@ int CmsData::StopGroupTimer(const unsigned char cms_id, const unsigned char grou
 {
 	if (cms_id == self_id_)
 	{
-		pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 		timer_delete(cms_self_.lighting_.lightgroups_.at(group_index).lightgroup_timerid);
-		pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 	}
 	else
 	{
@@ -1347,9 +1259,7 @@ int CmsData::StopGroupTimer(const unsigned char cms_id, const unsigned char grou
 			if (++cms_index >= cms_slaves_.size())
 				return -1;
 		}
-		pthread_mutex_lock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 		timer_delete(cms_slaves_.at(cms_index).lighting_.lightgroups_.at(group_index).lightgroup_timerid);
-		pthread_mutex_unlock(&cms_slaves_.at(cms_index).lighting_data_mutex_);
 	}
 
 	return 0;
@@ -1575,12 +1485,10 @@ int CmsData::IncreaseAirconTemperature()
 
 		unsigned char msg[8];
 
-		pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 		timer_delete(cms_self_.climate_.aircon_.showsetpoint_timerid);
 		timer_settime(cms_self_.climate_.aircon_.showsetpoint_timerid, 0, &cms_self_.climate_.aircon_.showsetpoint_timer, NULL);
 		cms_self_.climate_.aircon_.showing_setpoint_ = true;
 		unsigned char temperature = cms_self_.climate_.IncreaseAirconTemperature();
-		pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 		//	Mount the message
 		msg[0] = (unsigned char)self_id_;		//	From
@@ -1607,12 +1515,10 @@ int CmsData::DecreaseAirconTemperature()
 
 		unsigned char msg[8];
 
-		pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 		timer_delete(cms_self_.climate_.aircon_.showsetpoint_timerid);
 		timer_settime(cms_self_.climate_.aircon_.showsetpoint_timerid, 0, &cms_self_.climate_.aircon_.showsetpoint_timer, NULL);
 		cms_self_.climate_.aircon_.showing_setpoint_ = true;
 		unsigned char temperature = cms_self_.climate_.DecreaseAirconTemperature();
-		pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 		//	Mount the message
 		msg[0] = (unsigned char)self_id_;		//	From
@@ -1638,10 +1544,7 @@ int CmsData::ChangeAirconFanSpeed()
 		if(cms_self_.climate_.GetAirconMode() == Climate::HEATINGONLY || cms_self_.climate_.GetAirconMode() == Climate::COOLONLY)
 		{
 			unsigned char msg[8];
-
-			pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 			unsigned char fan_speed = cms_self_.climate_.ChangeAirconFanSpeed();
-			pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 			//	Mount the message
 			msg[0] = (unsigned char)self_id_;		//	From
@@ -1655,7 +1558,6 @@ int CmsData::ChangeAirconFanSpeed()
 
 			if (SendControlMessage(msg) == -1)
 				return -1;
-
 		}
 	}
 
@@ -1665,9 +1567,7 @@ int CmsData::ChangeAirconFanSpeed()
 int CmsData::SwitchAirconPower()
 {
 	unsigned char msg[8];
-	pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 	unsigned char power = cms_self_.climate_.SwitchAirconPower();
-	pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 	//	Mount the message
 	msg[0] = (unsigned char)self_id_;		//	From
@@ -1688,10 +1588,7 @@ int CmsData::SwitchAirconPower()
 int CmsData::ChangeAirconMode()
 {
 	unsigned char msg[8];
-
-	pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 	unsigned char mode = cms_self_.climate_.ChangeAirconMode();
-	pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 	//	Mount the message
 	msg[0] = (unsigned char)self_id_;		//	From
@@ -1714,10 +1611,7 @@ int CmsData::IncreaseHeatingTemperature(const unsigned char group_index)
 	change_flag_ = true;
 
 	unsigned char msg[8];
-
-	pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 	unsigned char temperature = cms_self_.climate_.IncreaseHeatingTemperature(group_index);
-	pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 	//	Mount the message
 	msg[0] = (unsigned char)self_id_;		//	From
@@ -1747,10 +1641,7 @@ int CmsData::DecreaseHeatingTemperature(const unsigned char group_index)
 	change_flag_ = true;
 
 	unsigned char msg[8];
-
-	pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 	unsigned char temperature = cms_self_.climate_.DecreaseHeatingTemperature(group_index);
-	pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 	//	Mount the message
 	msg[0] = (unsigned char)self_id_;		//	From
@@ -1781,9 +1672,7 @@ int CmsData::SwitchHeatingPower(const unsigned char group_index, const unsigned 
 
 	if(cms_self_.climate_.master_heatingenable_)
 	{
-		pthread_mutex_lock(&cms_self_.climate_data_mutex_);
 		unsigned char power = cms_self_.climate_.SwitchHeatingPower(group_index, switch_index);
-		pthread_mutex_unlock(&cms_self_.climate_data_mutex_);
 
 		//	Mount the message
 		msg[0] = (unsigned char)self_id_;		//	From
@@ -1827,10 +1716,8 @@ int CmsData::IncreaseFanLevel(const unsigned char group_index, const unsigned ch
 	msg[6] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).frame_position;			//	CAN frame position
 
 	//	Function call to fans class to increase the value (range checks are done in there)
-	pthread_mutex_lock(&cms_self_.fans_data_mutex_);
 	cms_self_.fans_.IncreaseFanLevel(group_index, fan_index);
 	msg[7] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).level;					//	Value
-	pthread_mutex_unlock(&cms_self_.fans_data_mutex_);
 
 	if(cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).type == Fans::BACKGROUND)
 	{
@@ -1864,10 +1751,8 @@ int CmsData::DecreaseFanLevel(const unsigned char group_index, const unsigned ch
 	msg[6] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).frame_position;			//	CAN frame position
 
 	//	Function call to fans class to increase the value (range checks are done in there)
-	pthread_mutex_lock(&cms_self_.fans_data_mutex_);
 	cms_self_.fans_.DecreaseFanLevel(group_index, fan_index);
 	msg[7] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).level;					//	Value
-	pthread_mutex_unlock(&cms_self_.fans_data_mutex_);
 
 	if(cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).type == Fans::BACKGROUND)
 	{
@@ -1917,9 +1802,7 @@ int CmsData::BoostFanLevel(const unsigned char group_id, Fans::FanType type)
 	msg[6] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).frame_position;			//	CAN frame position
 
 	//	Function call to fans class to increase the value (range checks are done in there)
-	pthread_mutex_lock(&cms_self_.fans_data_mutex_);
 	msg[7] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).level;					//	Value
-	pthread_mutex_unlock(&cms_self_.fans_data_mutex_);
 
 	if (SendCanMessage(msg) == -1)
 		return -1;
@@ -1946,7 +1829,6 @@ int CmsData::StartBoostFanTimer(const unsigned char group_id)
 	}
 
 	//	Function call to fans class to increase the value (range checks are done in there)
-	pthread_mutex_lock(&cms_self_.fans_data_mutex_);
  	//	(Re)Set the timer for boosting the fan
 	timer_delete(cms_self_.fans_.fansgroups_.at(group_index).fangroupboost_timerid);
 	SIGEV_PULSE_INIT(&cms_self_.fans_.fansgroups_.at(group_index).fangroupboost_event,
@@ -1965,7 +1847,6 @@ int CmsData::StartBoostFanTimer(const unsigned char group_id)
 
 	timer_settime(cms_self_.fans_.fansgroups_.at(group_index).fangroupboost_timerid,
 	0, &cms_self_.fans_.fansgroups_.at(group_index).fangroupboost_timer, NULL);
-	pthread_mutex_unlock(&cms_self_.fans_data_mutex_);
 
 	return 0;
 }
@@ -1993,11 +1874,8 @@ int CmsData::UnboostFanLevel(const unsigned char group_index)
 	msg[4] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).id;						//	Component id
 	msg[5] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).message_instance;		//	CAN message instance
 	msg[6] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).frame_position;			//	CAN frame position
-
-	pthread_mutex_lock(&cms_self_.fans_data_mutex_);
 	msg[7] = (unsigned char)cms_self_.fans_.fansgroups_.at(group_index).fans.at(fan_index).level;					//	Value
 	timer_delete(cms_self_.fans_.fansgroups_.at(group_index).fangroupboost_timerid);
-	pthread_mutex_unlock(&cms_self_.fans_data_mutex_);
 
 	if (SendCanMessage(msg) == -1)
 		return -1;
@@ -2665,7 +2543,6 @@ int CmsData::BroadcastOff()
 			msg[1] = (unsigned char)can_id_;				//	To
 			msg[2] = LIGHTING;				//	What: Light
 
-			pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 			cms_self_.lighting_.SetProfile(group_it, (Lighting::OFF));
 			//	First we send all the CAN messages
 			for (unsigned int light_it = 0; light_it < cms_self_.lighting_.lightgroups_.at(group_it).lights.size(); light_it++)
@@ -2680,7 +2557,6 @@ int CmsData::BroadcastOff()
 				if (SendCanMessage(msg) == -1)
 					return -1;
 			}
-			pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 		}
 
 
@@ -2694,7 +2570,6 @@ int CmsData::BroadcastOff()
 				msg[1] = (unsigned char)can_id_;				//	To
 				msg[2] = LIGHTING;				//	What: Light
 
-				pthread_mutex_lock(&cms_slaves_.at(cms_it).lighting_data_mutex_);
 				cms_slaves_.at(cms_it).lighting_.SetProfile(group_it, (Lighting::OFF));
 				//	First we send all the CAN messages
 				for (unsigned int light_it = 0; light_it < cms_slaves_.at(cms_it).lighting_.lightgroups_.at(group_it).lights.size(); light_it++)
@@ -2709,8 +2584,6 @@ int CmsData::BroadcastOff()
 					if (SendCanMessage(msg) == -1)
 						return -1;
 				}
-				pthread_mutex_unlock(&cms_slaves_.at(cms_it).lighting_data_mutex_);
-
 
 				//	Then we tell the slave we changed our profile
 				//	Mount the message
@@ -2856,7 +2729,6 @@ int CmsData::SyncLightValue(const unsigned char group_index, const unsigned char
 {
 	switch(profile)
 	{
-		pthread_mutex_lock(&cms_self_.lighting_data_mutex_);
 		case Lighting::DAY:
 			cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).day_value = value;
 		break;
@@ -2872,7 +2744,6 @@ int CmsData::SyncLightValue(const unsigned char group_index, const unsigned char
 		case Lighting::SHOWER:
 			cms_self_.lighting_.lightgroups_.at(group_index).lights.at(light_index).shower_value = value;
 		break;
-		pthread_mutex_unlock(&cms_self_.lighting_data_mutex_);
 	}
 
 	return 0;

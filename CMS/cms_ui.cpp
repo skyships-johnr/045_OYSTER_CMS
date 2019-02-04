@@ -308,9 +308,7 @@ void CmsUI::UpdateClock_Request(time_t gps_time) // called on non-kanzi thread
 	char time_string[26];
 	ctime_r(&gps_time, &time_string[0]);
 	string time_text(time_string);
-	pthread_mutex_lock(&clock_mutex_);
 	CmsData::Instance()->minutes_of_day_ = 60*(atoi(time_text.substr(11,2).c_str())) + atoi(time_text.substr(14,2).c_str());
-	pthread_mutex_unlock(&clock_mutex_);
 
 	if(g_bUpdateClock_Request)
 		printf("** UpdateClock_Request(%d) dropped because one for %d in progress\r\n",
@@ -398,7 +396,6 @@ void CmsUI::UpdateAll_Request() // called on non-kanzi thread
 void CmsUI::UpdateAll_Action() // called on kanzi thread
 {
 	//	Do slaves lights if master
-	pthread_mutex_lock(&lighting_ui_mutex_);
 	if(CmsData::Instance()->cms_self_.is_master)
 	{
 		for(unsigned int cms_it = 0; cms_it < CmsData::Instance()->cms_slaves_.size(); cms_it++)
@@ -414,7 +411,6 @@ void CmsUI::UpdateAll_Action() // called on kanzi thread
 	{
 		UpdateProfile_Action(CmsData::Instance()->self_id_, group_it);
 	}
-	pthread_mutex_unlock(&lighting_ui_mutex_);
 
 	//	Do Climate
 	UpdateAirconPower_Action();
@@ -459,6 +455,7 @@ static struct
 {
 	unsigned char cms_id, group_index;
 } g_UpdateProfile_Params[2];
+
 void CmsUI::UpdateProfile_Request(const unsigned char cms_id, const unsigned char group_index) // called on non-kanzi thread
 {
 	// have we already got this one ?
@@ -482,16 +479,16 @@ void CmsUI::UpdateProfile_Request(const unsigned char cms_id, const unsigned cha
 	}
 	// no slot for new one
 	printf("** UpdateProfile_Request(%d,%d) dropped because ones for %d,%d & %d,%d in progress\r\n",
-			cms_id, group_index, 
+			cms_id, group_index,
 			g_UpdateProfile_Params[0].cms_id, g_UpdateProfile_Params[0].group_index,
 			g_UpdateProfile_Params[1].cms_id, g_UpdateProfile_Params[1].group_index);
 }
+
 void CmsUI::UpdateProfile_Action(const unsigned char cms_id, const unsigned char group_index) // called on kanzi thread
 {
-	pthread_mutex_lock(&lighting_ui_mutex_);
 	lighting_ui_.UpdateProfile(cms_id, group_index);
-	pthread_mutex_unlock(&lighting_ui_mutex_);
 }
+
 void CmsUI::UpdateProfile_Check() // called on kanzi thread
 {
 	for(int i = 0; i < 2; i++)
@@ -522,12 +519,12 @@ void CmsUI::UpdateLightValue_Request(const unsigned char cms_id, const unsigned 
 		g_bUpdateLightValue_Request = true;
 	}
 }
+
 void CmsUI::UpdateLightValue_Action(const unsigned char cms_id, const unsigned char group_index, const unsigned char light_index) // called on kanzi thread
 {
-	pthread_mutex_lock(&lighting_ui_mutex_);
 	lighting_ui_.UpdateLightValue(cms_id, group_index, light_index);
-	pthread_mutex_unlock(&lighting_ui_mutex_);
 }
+
 void CmsUI::UpdateLightValue_Check() // called on kanzi thread
 {
 	if(g_bUpdateLightValue_Request)

@@ -528,7 +528,7 @@ int CmsControl::ParseMessage(THREAD_POOL_PARAM_T *ctp)
 				}
 			}
 
-		    //  If it's coming from itself, it's and outgoing message
+		    //  If it's coming from itself, it's an outgoing message
 			else if (control_struct->msg[0] == CmsData::Instance()->self_id_)
 		    {
 		        //  Check who's going to
@@ -786,11 +786,9 @@ int CmsControl::ParseMessage(THREAD_POOL_PARAM_T *ctp)
 						//	Temperature
 						if(control_struct->msg[6] == (unsigned char)0x00)
 						{
-							pthread_mutex_lock(&g_mmsaircon_mutex);
 							CmsData::Instance()->SetAirconTemperature((int)control_struct->msg[7]);
 							CmsUI::Instance()->UpdateAirconSetPointTemperature_Request();
 							CmsUI::Instance()->UpdateAirconTemperature_Request();
-							pthread_mutex_unlock(&g_mmsaircon_mutex);
 						}
 						//	Power
 						else if(control_struct->msg[6] == (unsigned char)0x01)
@@ -804,7 +802,6 @@ int CmsControl::ParseMessage(THREAD_POOL_PARAM_T *ctp)
 						//	Mode
 						else if(control_struct->msg[6] == (unsigned char)0x02)
 						{
-							pthread_mutex_lock(&g_mmsaircon_mutex);
 							CmsData::Instance()->SetAirconMode(control_struct->msg[7]);
 							CmsUI::Instance()->UpdateAirconMode_Request();
 							if(control_struct->msg[7] == 1)
@@ -817,24 +814,19 @@ int CmsControl::ParseMessage(THREAD_POOL_PARAM_T *ctp)
 								CmsData::Instance()->SetAirconPower(true);
 								CmsUI::Instance()->UpdateAirconPower_Request();
 							}
-							pthread_mutex_unlock(&g_mmsaircon_mutex);
 						}
 						//	Fan speed
 						else if(control_struct->msg[6] == (unsigned char)0x03)
 						{
-							pthread_mutex_lock(&g_mmsaircon_mutex);
 							CmsData::Instance()->SetAirconFanSpeed(control_struct->msg[7]);
 							CmsUI::Instance()->UpdateAirconFanSpeed_Request();
-							pthread_mutex_unlock(&g_mmsaircon_mutex);
 						}
 						//	Ambient Temperature
 						else if(control_struct->msg[6] == (unsigned char)0x04)
 						{
-							pthread_mutex_lock(&g_mmsaircon_mutex);
 							CmsData::Instance()->SetAirconAmbientTemperature((int)control_struct->msg[7]);
 							CmsUI::Instance()->UpdateAirconAmbientTemperature_Request();
 							CmsUI::Instance()->UpdateAirconTemperature_Request();
-							pthread_mutex_unlock(&g_mmsaircon_mutex);
 						}
 					}
 					else if(control_struct->msg[2] == SETTINGS)

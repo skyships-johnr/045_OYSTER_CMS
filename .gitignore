@@ -5898,3 +5898,15 @@ qnxenv.sh
 .metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.prefs
 .metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
 .metadata/version.ini
+.metadata/.plugins/org.eclipse.ui.workbench/dialog_settings.xml
+.metadata/.plugins/org.eclipse.ui.ide/dialog_settings.xml
+.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.workbench.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.ui.ide.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.ui.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.team.svn.core.prefs
+.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.cdt.ui.prefs
+.metadata/.plugins/org.eclipse.core.resources/.root/1.tree
+.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/properties.version
+.metadata/.plugins/org.eclipse.core.resources/.root/.indexes/history.version
+.metadata/.plugins/org.eclipse.core.resources/.projects/CMS/.markers

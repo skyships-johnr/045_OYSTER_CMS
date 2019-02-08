@@ -298,7 +298,7 @@ int Settings::GetScreenBrightness(int profile)
 int Settings::IncreaseScreenTimeout()
 {
 	if (screensettings_.screen_timeout < MAX_SCREENTIMEOUT)
-		screensettings_.screen_timeout++;
+		screensettings_.screen_timeout += 2;
 
 
 	return screensettings_.screen_timeout;
@@ -307,7 +307,7 @@ int Settings::IncreaseScreenTimeout()
 int Settings::DecreaseScreenTimeout()
 {
 	if (screensettings_.screen_timeout > MIN_SCREENTIMEOUT)
-		screensettings_.screen_timeout--;
+		screensettings_.screen_timeout -= 2;
 
 	return screensettings_.screen_timeout;
 }
@@ -380,11 +380,58 @@ int Settings::DecreaseDuskEndTime()
 	return GetDuskEndTime();
 }
 
+// Screen timeout workaraound
 void Settings::ResetDefaults()
 {
-	screensettings_.screen_timeout = screensettings_.screen_timeout_defaultvalue;
+	screensettings_.screen_timeout = DEFAULT_SCREENTIMEOUT;
 	screensettings_.screen_brightness_day = screensettings_.screen_brightness_day_defaultvalue;
 	screensettings_.screen_brightness_eve = screensettings_.screen_brightness_eve_defaultvalue;
 	screensettings_.screen_brightness_night = screensettings_.screen_brightness_night_defaultvalue;
 	screensettings_.screen_brightness_theatre = screensettings_.screen_brightness_theatre_defaultvalue;
+}
+
+// Screen timeout workaraound
+string Settings::GetScreenTimeoutText(int timeout)
+{
+    switch(timeout)
+    {
+        case 2:     return "5s";
+        case 4:     return "10s";
+        case 6:     return "15s";
+        case 8:     return "20s";
+        case 10:    return "30s";
+        case 12:    return "45s";
+        case 14:    return "1m";
+        case 16:    return "2m";
+        case 18:    return "3m";
+        case 20:    return "5m";
+        case 22:    return "7m";
+        case 24:    return "10m";
+        case 26:    return "15m";
+        case 28:    return "20m";
+        case 30:    return "30m";
+        default:    return "1m";
+    }
+}
+int Settings::GetScreenTimeoutTime(int timeout)
+{
+    switch(timeout)
+    {
+        case 2:     return 5;
+        case 4:     return 10;
+        case 6:     return 15;
+        case 8:     return 20;
+        case 10:    return 30;
+        case 12:    return 45;
+        case 14:    return 60;
+        case 16:    return 120;
+        case 18:    return 180;
+        case 20:    return 300;
+        case 22:    return 420;
+        case 24:    return 600;
+        case 26:    return 900;
+        case 28:    return 1200;
+        case 30:    return 1800;
+        default:    return 60;
+    }
 }

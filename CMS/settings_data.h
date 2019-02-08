@@ -6,6 +6,7 @@
 
 #define MIN_SCREENTIMEOUT 2
 #define MAX_SCREENTIMEOUT 30
+#define DEFAULT_SCREENTIMEOUT 14
 
 using namespace kanzi;
 
@@ -140,6 +141,10 @@ public:
 	int DecreaseDuskEndTime();
 
 	void ResetDefaults();
+
+    // Screen timeout workaround
+    string GetScreenTimeoutText(int timeout);
+    int GetScreenTimeoutTime(int timeout);
 };
 
 #endif	//CMS_SETTINGS_H_

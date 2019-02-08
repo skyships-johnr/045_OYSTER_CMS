@@ -58,9 +58,9 @@ int CmsData::InitScreenTimer()
 		return -1;
 	}
 
-	screentimeout_timer.it_value.tv_sec = 60*(cms_self_.settings_.screensettings_.screen_timeout);
+	screentimeout_timer.it_value.tv_sec = cms_self_.settings_.GetScreenTimeoutTime(cms_self_.settings_.screensettings_.screen_timeout);
 	screentimeout_timer.it_value.tv_nsec = 0;
-	screentimeout_timer.it_interval.tv_sec = 0;//60*(cms_self_.settings_.screensettings_.screen_timeout);
+	screentimeout_timer.it_interval.tv_sec = 0;
 	screentimeout_timer.it_interval.tv_nsec = 0;
 
 	timer_settime(screentimeout_timerid, 0, &screentimeout_timer, NULL);
@@ -70,8 +70,7 @@ int CmsData::InitScreenTimer()
 
 int CmsData::UpdateScreenTimer()
 {
-	screentimeout_timer.it_value.tv_sec = 60*(cms_self_.settings_.screensettings_.screen_timeout);
-	//screentimeout_timer.it_interval.tv_sec = 60*(cms_self_.settings_.screensettings_.screen_timeout);
+	screentimeout_timer.it_value.tv_sec = cms_self_.settings_.GetScreenTimeoutTime(cms_self_.settings_.screensettings_.screen_timeout);
 	timer_settime(screentimeout_timerid, 0, &screentimeout_timer, NULL);
 
 	return 0;
@@ -146,6 +145,9 @@ int CmsData::InitValues()
 	all_off_ = false;
 	cms_self_.climate_.master_heatingenable_ = true;
 	cms_self_.climate_.aircon_.showing_setpoint_ = false;
+
+    cms_self_.settings_.screensettings_.screen_timeout = DEFAULT_SCREENTIMEOUT;
+    cms_self_.settings_.screensettings_.screen_timeout_defaultvalue = DEFAULT_SCREENTIMEOUT;
 
 	return 0;
 }

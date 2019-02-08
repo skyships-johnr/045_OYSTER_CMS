@@ -89,7 +89,7 @@ void SettingsInterface::InitMessageHandlers()
 void SettingsInterface::SetInitValues()
 {
 	SetScreenBrightness(CmsData::Instance()->GetScreenBrightness());
-	SetScreenTimeout(CmsData::Instance()->cms_self_.settings_.screensettings_.screen_timeout);
+	SetScreenTimeout(CmsData::Instance()->GetScreenTimeout());
 	/*if (CmsData::Instance()->cms_self_.is_master)
 	{
 		SetDawnStartTime(CmsData::Instance()->cms_self_.settings_.GetDawnStartTime(), CmsData::Instance()->cms_self_.settings_.GetDawnStartNormalizedTime());
@@ -242,7 +242,7 @@ void SettingsInterface::SetScreenTimeout(const int timeout)
 {
 	//	Normalize values
 	int bar_width = (timeout-2) * 310 / 28;
-	string bar_text = to_string(timeout) + "m";
+	string bar_text = CmsData::Instance()->cms_self_.settings_.GetScreenTimeoutText(timeout);
 
 	//	Set on screen
 	screentimeout_setbar_->setProperty(*labelledsetbar_layoutwidth_, bar_width);
